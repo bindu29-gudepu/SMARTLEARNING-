@@ -59,7 +59,7 @@ function openSubject(subject) {
   document.getElementById("step2").style.display = "none";
   document.getElementById("step3").style.display = "block";
 
-  document.getElementById("title").innerText = subject + " - Learning";
+  document.getElementById("title").innerText = subject + " Learning";
 
   let pdfLinks = {
     English: "https://ncert.nic.in/textbook/pdf/feep1dd.pdf",
@@ -71,9 +71,9 @@ function openSubject(subject) {
   let contentDiv = document.getElementById("content");
 
   contentDiv.innerHTML = `
-    <h4>📄 Full NCERT Book</h4>
+    <h4>📄 NCERT Full Book</h4>
     <button onclick="window.open('${pdfLinks[subject]}','_blank')">
-      Open Complete Book
+      Open Book
     </button>
 
     <h4>🎥 Search Any Lesson Video</h4>
@@ -93,7 +93,7 @@ function searchVideo(subject) {
     return;
   }
 
-  let query = subject + " " + chapter + " class lesson";
+  let query = subject + " class " + chapter + " lesson";
   let url = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
 
   window.open(url, "_blank");
