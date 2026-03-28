@@ -4,10 +4,11 @@
   <title>Smart Learning Hub</title>
   <style>
     body { font-family: Arial; text-align: center; background: #f4f4f4; }
-    .box { background: white; padding: 20px; margin: 20px auto; width: 320px; border-radius: 10px; }
+    .box { background: white; padding: 20px; margin: 20px auto; width: 350px; border-radius: 10px; }
     button { padding: 10px; margin: 5px; }
     select, input { padding: 10px; margin: 5px; width: 85%; }
-    a { color: blue; }
+    iframe { width: 100%; height: 200px; margin-top: 10px; }
+    .text-box { background: #eef; padding: 10px; border-radius: 8px; margin-top: 10px; }
   </style>
 </head>
 
@@ -52,51 +53,56 @@
 <script>
 let subject;
 
-// Real lesson data with YouTube links
+// Embedded YouTube + Text lessons
 const lessons = {
 
 Telugu: {
   video: [
-    { title: "Telugu Grammar Basics", link: "https://www.youtube.com/watch?v=ZV4F7Q3nT9k" }
+    { title: "Telugu Grammar", embed: "https://www.youtube.com/embed/ZV4F7Q3nT9k" }
   ],
   text: [
-    "తెలుగు వ్యాకరణం భాష యొక్క నిర్మాణాన్ని అర్థం చేసుకోవడానికి సహాయపడుతుంది."
+    "తెలుగు వ్యాకరణం భాష యొక్క నిర్మాణాన్ని అర్థం చేసుకోవడానికి సహాయపడుతుంది.",
+    "ఉదాహరణ: నామవాచకం, క్రియ, విశేషణం"
   ]
 },
 
 Hindi: {
   video: [
-    { title: "Hindi Vyakaran", link: "https://www.youtube.com/watch?v=QkK0hT8y8i4" }
+    { title: "Hindi Grammar", embed: "https://www.youtube.com/embed/QkK0hT8y8i4" }
   ],
   text: [
-    "हिंदी व्याकरण भाषा के नियमों को समझने में मदद करता है।"
+    "हिंदी व्याकरण भाषा को सही तरीके से लिखने और बोलने में मदद करता है।",
+    "उदाहरण: संज्ञा, क्रिया, विशेषण"
   ]
 },
 
 English: {
   video: [
-    { title: "Parts of Speech", link: "https://www.youtube.com/watch?v=6L7Hc8f9bXU" }
+    { title: "Parts of Speech", embed: "https://www.youtube.com/embed/6L7Hc8f9bXU" }
   ],
   text: [
-    "English grammar includes nouns, verbs, adjectives, etc."
+    "English grammar consists of parts of speech.",
+    "Examples: Noun, Verb, Adjective, Adverb"
   ]
 },
 
 Social: {
   video: [
-    { title: "Indian History Introduction", link: "https://www.youtube.com/watch?v=9p4kX3b1l7Q" }
+    { title: "Indian History", embed: "https://www.youtube.com/embed/9p4kX3b1l7Q" }
   ],
   text: [
-    "Social studies includes history, geography, and civics."
+    "Social studies include history, geography, civics.",
+    "Example: Ancient India, Rivers, Government"
   ]
 },
 
 Science: {
   video: [
-    { title: "Human Digestive System", link: "https://www.youtube.com/watch?v=Og5xAdC8EUI" }
+    { title: "Digestive System", embed: "https://www.youtube.com/embed/Og5xAdC8EUI" }
   ],
   text: [
-    "The digestive system helps break down food into energy."
+    "The digestive system converts food into energy.",
+    "Organs: Mouth, Stomach, Intestine"
   ]
 }
 
@@ -133,12 +139,14 @@ function showContent(type) {
 
   if(type === "video") {
     data.video.forEach(v => {
-      contentDiv.innerHTML += `<p>${v.title}</p>
-      <a href="${v.link}" target="_blank">▶ Watch Video</a><br><br>`;
+      contentDiv.innerHTML += `
+        <p>${v.title}</p>
+        <iframe src="${v.embed}" frameborder="0" allowfullscreen></iframe>
+      `;
     });
   } else {
     data.text.forEach(t => {
-      contentDiv.innerHTML += `<p>${t}</p>`;
+      contentDiv.innerHTML += `<div class="text-box">${t}</div>`;
     });
   }
 }
