@@ -45,42 +45,19 @@ let subject;
 
 const lessons = {
   English: [
-    {
-      name: "Nouns",
-      video: "https://www.youtube.com/watch?v=3vtXrL1Yf8g",
-      pdf: "https://ncert.nic.in/textbook/pdf/feep101.pdf"
-    },
-    {
-      name: "Verbs",
-      video: "https://www.youtube.com/watch?v=3h5rFJzv9vQ",
-      pdf: "https://ncert.nic.in/textbook/pdf/feep102.pdf"
-    }
+    "Nouns",
+    "Verbs",
+    "Adjectives"
   ],
-
   Science: [
-    {
-      name: "Food Sources",
-      video: "https://www.youtube.com/watch?v=Zgk9x2PpGmY",
-      pdf: "https://ncert.nic.in/textbook/pdf/scie101.pdf"
-    },
-    {
-      name: "Components of Food",
-      video: "https://www.youtube.com/watch?v=VZ0P9Qk9lXU",
-      pdf: "https://ncert.nic.in/textbook/pdf/scie102.pdf"
-    }
+    "Food Sources",
+    "Components of Food",
+    "Sorting Materials"
   ],
-
   Social: [
-    {
-      name: "History Introduction",
-      video: "https://www.youtube.com/watch?v=Q7yZz9Zl6gU",
-      pdf: "https://ncert.nic.in/textbook/pdf/sst101.pdf"
-    },
-    {
-      name: "Early Humans",
-      video: "https://www.youtube.com/watch?v=4FJx8s3Pp9A",
-      pdf: "https://ncert.nic.in/textbook/pdf/sst102.pdf"
-    }
+    "History Introduction",
+    "Early Humans",
+    "Geography Basics"
   ]
 };
 
@@ -105,11 +82,24 @@ function showLessons(sub) {
   let list = document.getElementById("lessonList");
   list.innerHTML = "";
 
-  lessons[sub].forEach(l => {
+  lessons[sub].forEach(lesson => {
+
+    let videoQuery = subject + " " + lesson + " class 6 explanation";
+    let videoURL = "https://www.youtube.com/results?search_query=" + encodeURIComponent(videoQuery);
+
+    let pdfURL = "https://ncert.nic.in/textbook/textbook.htm";
+
     list.innerHTML += `
-      <p>${l.name}</p>
-      <button onclick="window.open('${l.video}','_blank')">▶ Video</button>
-      <button onclick="window.open('${l.pdf}','_blank')">📄 PDF</button>
+      <p>${lesson}</p>
+
+      <button onclick="window.open('${videoURL}','_blank')">
+        ▶ Watch Video
+      </button>
+
+      <button onclick="window.open('${pdfURL}','_blank')">
+        📄 Open NCERT Book
+      </button>
+
       <br><br>
     `;
   });
