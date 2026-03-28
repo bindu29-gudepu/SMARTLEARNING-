@@ -25,29 +25,71 @@
     <option>9</option>
     <option>10</option>
   </select><br>
-  <button onclick="goNext()">Next</button>
+  <button onclick="next()">Next</button>
 </div>
 
 <div class="box" id="step2" style="display:none;">
   <h3>Select Subject</h3>
-  <button onclick="openSubject('English')">English</button>
-  <button onclick="openSubject('Hindi')">Hindi</button>
-  <button onclick="openSubject('Science')">Science</button>
-  <button onclick="openSubject('Social')">Social</button>
+  <button onclick="showLessons('English')">English</button>
+  <button onclick="showLessons('Science')">Science</button>
+  <button onclick="showLessons('Social')">Social</button>
 </div>
 
 <div class="box" id="step3" style="display:none;">
-  <h3 id="title"></h3>
-  <div id="content"></div>
+  <h3>Select Lesson</h3>
+  <div id="lessonList"></div>
 </div>
 
 <script>
-function goNext() {
+let subject;
+
+const lessons = {
+  English: [
+    {
+      name: "Nouns",
+      video: "https://www.youtube.com/watch?v=3vtXrL1Yf8g",
+      pdf: "https://ncert.nic.in/textbook/pdf/feep101.pdf"
+    },
+    {
+      name: "Verbs",
+      video: "https://www.youtube.com/watch?v=3h5rFJzv9vQ",
+      pdf: "https://ncert.nic.in/textbook/pdf/feep102.pdf"
+    }
+  ],
+
+  Science: [
+    {
+      name: "Food Sources",
+      video: "https://www.youtube.com/watch?v=Zgk9x2PpGmY",
+      pdf: "https://ncert.nic.in/textbook/pdf/scie101.pdf"
+    },
+    {
+      name: "Components of Food",
+      video: "https://www.youtube.com/watch?v=VZ0P9Qk9lXU",
+      pdf: "https://ncert.nic.in/textbook/pdf/scie102.pdf"
+    }
+  ],
+
+  Social: [
+    {
+      name: "History Introduction",
+      video: "https://www.youtube.com/watch?v=Q7yZz9Zl6gU",
+      pdf: "https://ncert.nic.in/textbook/pdf/sst101.pdf"
+    },
+    {
+      name: "Early Humans",
+      video: "https://www.youtube.com/watch?v=4FJx8s3Pp9A",
+      pdf: "https://ncert.nic.in/textbook/pdf/sst102.pdf"
+    }
+  ]
+};
+
+function next() {
   let name = document.getElementById("name").value;
   let cls = document.getElementById("class").value;
 
   if(name === "" || cls === "") {
-    alert("Enter all details");
+    alert("Enter details");
     return;
   }
 
@@ -55,48 +97,22 @@ function goNext() {
   document.getElementById("step2").style.display = "block";
 }
 
-function openSubject(subject) {
+function showLessons(sub) {
+  subject = sub;
   document.getElementById("step2").style.display = "none";
   document.getElementById("step3").style.display = "block";
 
-  document.getElementById("title").innerText = subject + " Learning";
+  let list = document.getElementById("lessonList");
+  list.innerHTML = "";
 
-  let pdfLinks = {
-    English: "https://ncert.nic.in/textbook/pdf/feep1dd.pdf",
-    Hindi: "https://ncert.nic.in/textbook/pdf/hinl1dd.pdf",
-    Science: "https://ncert.nic.in/textbook/pdf/scie1dd.pdf",
-    Social: "https://ncert.nic.in/textbook/pdf/sstl1dd.pdf"
-  };
-
-  let contentDiv = document.getElementById("content");
-
-  contentDiv.innerHTML = `
-    <h4>📄 NCERT Full Book</h4>
-    <button onclick="window.open('${pdfLinks[subject]}','_blank')">
-      Open Book
-    </button>
-
-    <h4>🎥 Search Any Lesson Video</h4>
-    <input type="text" id="chapter" placeholder="Enter Chapter Name">
-    <br>
-    <button onclick="searchVideo('${subject}')">
-      Search Video
-    </button>
-  `;
-}
-
-function searchVideo(subject) {
-  let chapter = document.getElementById("chapter").value;
-
-  if(chapter === "") {
-    alert("Enter chapter name");
-    return;
-  }
-
-  let query = subject + " class " + chapter + " lesson";
-  let url = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
-
-  window.open(url, "_blank");
+  lessons[sub].forEach(l => {
+    list.innerHTML += `
+      <p>${l.name}</p>
+      <button onclick="window.open('${l.video}','_blank')">▶ Video</button>
+      <button onclick="window.open('${l.pdf}','_blank')">📄 PDF</button>
+      <br><br>
+    `;
+  });
 }
 </script>
 
