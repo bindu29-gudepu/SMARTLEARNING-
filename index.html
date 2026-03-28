@@ -7,7 +7,6 @@
     .box { background: white; padding: 20px; margin: 20px auto; width: 360px; border-radius: 10px; }
     button { padding: 10px; margin: 5px; cursor: pointer; }
     select, input { padding: 10px; margin: 5px; width: 85%; }
-    img { width: 100%; border-radius: 10px; margin-top: 10px; }
   </style>
 </head>
 
@@ -56,8 +55,8 @@ const lessons = {
 English: {
   video: [
     { 
-      title: "English Grammar Basics",
-      id: "kUMe1FH4CHE"
+      title: "English Grammar Basics", 
+      link: "https://www.youtube.com/watch?v=kUMe1FH4CHE"
     }
   ],
   pdf: [
@@ -68,8 +67,8 @@ English: {
 Hindi: {
   video: [
     { 
-      title: "Hindi Grammar Basics",
-      id: "8G8c0X9QdH0"
+      title: "Hindi Grammar Basics", 
+      link: "https://www.youtube.com/watch?v=8G8c0X9QdH0"
     }
   ],
   pdf: [
@@ -80,8 +79,8 @@ Hindi: {
 Science: {
   video: [
     { 
-      title: "Digestive System",
-      id: "Fn6zDt8Q7cI"
+      title: "Human Digestive System", 
+      link: "https://www.youtube.com/watch?v=Fn6zDt8Q7cI"
     }
   ],
   pdf: [
@@ -92,8 +91,8 @@ Science: {
 Social: {
   video: [
     { 
-      title: "Indian History",
-      id: "xuCn8ux2gbs"
+      title: "Introduction to History", 
+      link: "https://www.youtube.com/watch?v=xuCn8ux2gbs"
     }
   ],
   pdf: [
@@ -134,15 +133,10 @@ function showContent(type) {
 
   if(type === "video") {
     data.video.forEach(v => {
-      let thumb = `https://img.youtube.com/vi/${v.id}/0.jpg`;
-      let link = `https://www.youtube.com/watch?v=${v.id}`;
-
       contentDiv.innerHTML += `
         <p>${v.title}</p>
-        <img src="${thumb}" onclick="window.open('${link}', '_blank')">
-        <br>
-        <button onclick="window.open('${link}', '_blank')">
-          ▶ Watch Video
+        <button onclick="window.open('${v.link}', '_blank')">
+          ▶ Watch Video on YouTube
         </button>
         <br><br>
       `;
