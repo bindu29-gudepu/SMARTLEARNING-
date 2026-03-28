@@ -5,10 +5,9 @@
   <style>
     body { font-family: Arial; text-align: center; background: #f4f4f4; }
     .box { background: white; padding: 20px; margin: 20px auto; width: 360px; border-radius: 10px; }
-    button { padding: 10px; margin: 5px; }
+    button { padding: 10px; margin: 5px; cursor: pointer; }
     select, input { padding: 10px; margin: 5px; width: 85%; }
-    iframe { width: 100%; height: 250px; margin-top: 10px; }
-    .pdf-frame { height: 350px; }
+    iframe { width: 100%; height: 220px; margin-top: 10px; }
   </style>
 </head>
 
@@ -56,37 +55,53 @@ const lessons = {
 
 English: {
   video: [
-    { title: "English Grammar", embed: "https://www.youtube.com/embed/6L7Hc8f9bXU" }
+    { 
+      title: "Parts of Speech", 
+      embed: "https://www.youtube.com/embed/8G8c0X9QdH0",
+      watch: "https://www.youtube.com/watch?v=8G8c0X9QdH0"
+    }
   ],
   pdf: [
-    { title: "Class 6 English NCERT", link: "https://ncert.nic.in/textbook/pdf/feep1dd.pdf" }
+    { title: "English NCERT Book", link: "https://ncert.nic.in/textbook/pdf/feep1dd.pdf" }
   ]
 },
 
 Hindi: {
   video: [
-    { title: "Hindi Grammar", embed: "https://www.youtube.com/embed/QkK0hT8y8i4" }
+    { 
+      title: "Hindi Grammar", 
+      embed: "https://www.youtube.com/embed/Z6RzP9Z6H9k",
+      watch: "https://www.youtube.com/watch?v=Z6RzP9Z6H9k"
+    }
   ],
   pdf: [
-    { title: "Class 6 Hindi NCERT", link: "https://ncert.nic.in/textbook/pdf/hinl1dd.pdf" }
+    { title: "Hindi NCERT Book", link: "https://ncert.nic.in/textbook/pdf/hinl1dd.pdf" }
   ]
 },
 
 Science: {
   video: [
-    { title: "Science Lesson", embed: "https://www.youtube.com/embed/Og5xAdC8EUI" }
+    { 
+      title: "Digestive System", 
+      embed: "https://www.youtube.com/embed/9l7r2k0x6lA",
+      watch: "https://www.youtube.com/watch?v=9l7r2k0x6lA"
+    }
   ],
   pdf: [
-    { title: "Class 6 Science NCERT", link: "https://ncert.nic.in/textbook/pdf/scie1dd.pdf" }
+    { title: "Science NCERT Book", link: "https://ncert.nic.in/textbook/pdf/scie1dd.pdf" }
   ]
 },
 
 Social: {
   video: [
-    { title: "Social Studies", embed: "https://www.youtube.com/embed/9p4kX3b1l7Q" }
+    { 
+      title: "Indian History", 
+      embed: "https://www.youtube.com/embed/n7ndRwqJYDM",
+      watch: "https://www.youtube.com/watch?v=n7ndRwqJYDM"
+    }
   ],
   pdf: [
-    { title: "Class 6 Social Science NCERT", link: "https://ncert.nic.in/textbook/pdf/sstl1dd.pdf" }
+    { title: "Social Science NCERT Book", link: "https://ncert.nic.in/textbook/pdf/sstl1dd.pdf" }
   ]
 }
 
@@ -126,14 +141,23 @@ function showContent(type) {
       contentDiv.innerHTML += `
         <p>${v.title}</p>
         <iframe src="${v.embed}" allowfullscreen></iframe>
+        <br>
+        <button onclick="window.open('${v.watch}', '_blank')">
+          ▶ Open in YouTube
+        </button>
+        <br><br>
       `;
     });
   } else {
     data.pdf.forEach(p => {
       contentDiv.innerHTML += `
         <p>${p.title}</p>
-        <iframe class="pdf-frame" src="${p.link}"></iframe>
-        <br><a href="${p.link}" target="_blank">⬇ Download PDF</a><br><br>
+        <button onclick="window.open('${p.link}', '_blank')">
+          📖 Open PDF
+        </button>
+        <br>
+        <a href="${p.link}" target="_blank">⬇ Download PDF</a>
+        <br><br>
       `;
     });
   }
