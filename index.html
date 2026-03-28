@@ -3,24 +3,11 @@
 <head>
   <title>Smart Learning Hub</title>
   <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #f4f4f4;
-    }
-    h1 {
-      color: #333;
-    }
-    input, button {
-      padding: 10px;
-      margin: 5px;
-    }
-    li {
-      list-style: none;
-      background: white;
-      margin: 5px;
-      padding: 10px;
-    }
+    body { font-family: Arial; text-align: center; background: #f4f4f4; }
+    .box { background: white; padding: 20px; margin: 20px auto; width: 320px; border-radius: 10px; }
+    button { padding: 10px; margin: 5px; }
+    select, input { padding: 10px; margin: 5px; width: 85%; }
+    a { color: blue; }
   </style>
 </head>
 
@@ -28,52 +15,133 @@
 
 <h1>📚 Smart Learning Hub</h1>
 
-<input type="text" id="courseName" placeholder="Enter Course Name">
-<input type="number" id="progress" placeholder="Progress %">
-<button onclick="addCourse()">Add Course</button>
+<div class="box" id="step1">
+  <h3>Enter Details</h3>
+  <input type="text" id="name" placeholder="Enter Name"><br>
+  <select id="class">
+    <option value="">Select Class</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+  </select><br>
+  <button onclick="goToSubjects()">Next</button>
+</div>
 
-<ul id="courseList"></ul>
+<div class="box" id="step2" style="display:none;">
+  <h3>Select Subject</h3>
+  <button onclick="selectSubject('Telugu')">Telugu</button>
+  <button onclick="selectSubject('Hindi')">Hindi</button>
+  <button onclick="selectSubject('English')">English</button>
+  <button onclick="selectSubject('Social')">Social</button>
+  <button onclick="selectSubject('Science')">Science</button>
+</div>
+
+<div class="box" id="step3" style="display:none;">
+  <h3>Select Learning Style</h3>
+  <button onclick="showContent('video')">🎥 Video</button>
+  <button onclick="showContent('text')">📖 Text</button>
+</div>
+
+<div class="box" id="step4" style="display:none;">
+  <h3 id="title"></h3>
+  <div id="content"></div>
+</div>
 
 <script>
-  let courses = [
-    { name: "Data Structures", progress: 60 },
-    { name: "DBMS", progress: 40 },
-    { name: "Web Development", progress: 80 }
-  ];
+let subject;
 
-  function displayCourses() {
-    const list = document.getElementById("courseList");
-    list.innerHTML = "";
+// Real lesson data with YouTube links
+const lessons = {
 
-    courses.forEach((course, index) => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        ${course.name} - ${course.progress}% 
-        <button onclick="deleteCourse(${index})">❌</button>
-      `;
-      list.appendChild(li);
+Telugu: {
+  video: [
+    { title: "Telugu Grammar Basics", link: "https://www.youtube.com/watch?v=ZV4F7Q3nT9k" }
+  ],
+  text: [
+    "తెలుగు వ్యాకరణం భాష యొక్క నిర్మాణాన్ని అర్థం చేసుకోవడానికి సహాయపడుతుంది."
+  ]
+},
+
+Hindi: {
+  video: [
+    { title: "Hindi Vyakaran", link: "https://www.youtube.com/watch?v=QkK0hT8y8i4" }
+  ],
+  text: [
+    "हिंदी व्याकरण भाषा के नियमों को समझने में मदद करता है।"
+  ]
+},
+
+English: {
+  video: [
+    { title: "Parts of Speech", link: "https://www.youtube.com/watch?v=6L7Hc8f9bXU" }
+  ],
+  text: [
+    "English grammar includes nouns, verbs, adjectives, etc."
+  ]
+},
+
+Social: {
+  video: [
+    { title: "Indian History Introduction", link: "https://www.youtube.com/watch?v=9p4kX3b1l7Q" }
+  ],
+  text: [
+    "Social studies includes history, geography, and civics."
+  ]
+},
+
+Science: {
+  video: [
+    { title: "Human Digestive System", link: "https://www.youtube.com/watch?v=Og5xAdC8EUI" }
+  ],
+  text: [
+    "The digestive system helps break down food into energy."
+  ]
+}
+
+};
+
+function goToSubjects() {
+  const name = document.getElementById("name").value;
+  const cls = document.getElementById("class").value;
+
+  if(name === "" || cls === "") {
+    alert("Please enter all details");
+    return;
+  }
+
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+}
+
+function selectSubject(sub) {
+  subject = sub;
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("step3").style.display = "block";
+}
+
+function showContent(type) {
+  document.getElementById("step3").style.display = "none";
+  document.getElementById("step4").style.display = "block";
+
+  let data = lessons[subject];
+  let contentDiv = document.getElementById("content");
+  contentDiv.innerHTML = "";
+
+  document.getElementById("title").innerText = subject + " - " + type.toUpperCase();
+
+  if(type === "video") {
+    data.video.forEach(v => {
+      contentDiv.innerHTML += `<p>${v.title}</p>
+      <a href="${v.link}" target="_blank">▶ Watch Video</a><br><br>`;
+    });
+  } else {
+    data.text.forEach(t => {
+      contentDiv.innerHTML += `<p>${t}</p>`;
     });
   }
-
-  function addCourse() {
-    const name = document.getElementById("courseName").value;
-    const progress = document.getElementById("progress").value;
-
-    if(name === "" || progress === "") {
-      alert("Please fill all fields");
-      return;
-    }
-
-    courses.push({ name, progress });
-    displayCourses();
-  }
-
-  function deleteCourse(index) {
-    courses.splice(index, 1);
-    displayCourses();
-  }
-
-  displayCourses();
+}
 </script>
 
 </body>
