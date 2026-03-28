@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Learning Hub</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    li {
+      list-style: none;
+      background: white;
+      margin: 5px;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>📚 Smart Learning Hub</h1>
+
+<input type="text" id="courseName" placeholder="Enter Course Name">
+<input type="number" id="progress" placeholder="Progress %">
+<button onclick="addCourse()">Add Course</button>
+
+<ul id="courseList"></ul>
+
+<script>
+  let courses = [
+    { name: "Data Structures", progress: 60 },
+    { name: "DBMS", progress: 40 },
+    { name: "Web Development", progress: 80 }
+  ];
+
+  function displayCourses() {
+    const list = document.getElementById("courseList");
+    list.innerHTML = "";
+
+    courses.forEach((course, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${course.name} - ${course.progress}% 
+        <button onclick="deleteCourse(${index})">❌</button>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  function addCourse() {
+    const name = document.getElementById("courseName").value;
+    const progress = document.getElementById("progress").value;
+
+    if(name === "" || progress === "") {
+      alert("Please fill all fields");
+      return;
+    }
+
+    courses.push({ name, progress });
+    displayCourses();
+  }
+
+  function deleteCourse(index) {
+    courses.splice(index, 1);
+    displayCourses();
+  }
+
+  displayCourses();
+</script>
+
+</body>
+</html>
