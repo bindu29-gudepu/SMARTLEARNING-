@@ -1,11 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Learning Hub</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #f4f4f4; }
+    .box { background: white; padding: 20px; margin: 20px auto; width: 360px; border-radius: 10px; }
+    button { padding: 10px; margin: 5px; cursor: pointer; }
+    select, input { padding: 10px; margin: 5px; width: 85%; }
+    img { width: 100%; border-radius: 10px; margin-top: 10px; }
+  </style>
+</head>
+
+<body>
+
+<h1>📚 Smart Learning Hub</h1>
+
+<div class="box" id="step1">
+  <h3>Enter Details</h3>
+  <input type="text" id="name" placeholder="Enter Name"><br>
+  <select id="class">
+    <option value="">Select Class</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+  </select><br>
+  <button onclick="goToSubjects()">Next</button>
+</div>
+
+<div class="box" id="step2" style="display:none;">
+  <h3>Select Subject</h3>
+  <button onclick="selectSubject('English')">English</button>
+  <button onclick="selectSubject('Hindi')">Hindi</button>
+  <button onclick="selectSubject('Science')">Science</button>
+  <button onclick="selectSubject('Social')">Social</button>
+</div>
+
+<div class="box" id="step3" style="display:none;">
+  <h3>Select Learning Style</h3>
+  <button onclick="showContent('video')">🎥 Video</button>
+  <button onclick="showContent('pdf')">📄 PDF Material</button>
+</div>
+
+<div class="box" id="step4" style="display:none;">
+  <h3 id="title"></h3>
+  <div id="content"></div>
+</div>
+
+<script>
+let subject;
+
 const lessons = {
 
 English: {
   video: [
     { 
-      title: "Parts of Speech (English Grammar)", 
-      embed: "https://www.youtube.com/embed/9oJ1gK2vQ4Q",
-      watch: "https://www.youtube.com/watch?v=9oJ1gK2vQ4Q"
+      title: "English Grammar Basics",
+      id: "kUMe1FH4CHE"
     }
   ],
   pdf: [
@@ -16,9 +68,8 @@ English: {
 Hindi: {
   video: [
     { 
-      title: "Hindi Vyakaran Basics", 
-      embed: "https://www.youtube.com/embed/7J9y9yKjz0M",
-      watch: "https://www.youtube.com/watch?v=7J9y9yKjz0M"
+      title: "Hindi Grammar Basics",
+      id: "8G8c0X9QdH0"
     }
   ],
   pdf: [
@@ -29,9 +80,8 @@ Hindi: {
 Science: {
   video: [
     { 
-      title: "Human Digestive System", 
-      embed: "https://www.youtube.com/embed/Fn6zDt8Q7cI",
-      watch: "https://www.youtube.com/watch?v=Fn6zDt8Q7cI"
+      title: "Digestive System",
+      id: "Fn6zDt8Q7cI"
     }
   ],
   pdf: [
@@ -42,9 +92,8 @@ Science: {
 Social: {
   video: [
     { 
-      title: "Introduction to History", 
-      embed: "https://www.youtube.com/embed/xuCn8ux2gbs",
-      watch: "https://www.youtube.com/watch?v=xuCn8ux2gbs"
+      title: "Indian History",
+      id: "xuCn8ux2gbs"
     }
   ],
   pdf: [
@@ -53,3 +102,66 @@ Social: {
 }
 
 };
+
+function goToSubjects() {
+  const name = document.getElementById("name").value;
+  const cls = document.getElementById("class").value;
+
+  if(name === "" || cls === "") {
+    alert("Please enter all details");
+    return;
+  }
+
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+}
+
+function selectSubject(sub) {
+  subject = sub;
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("step3").style.display = "block";
+}
+
+function showContent(type) {
+  document.getElementById("step3").style.display = "none";
+  document.getElementById("step4").style.display = "block";
+
+  let data = lessons[subject];
+  let contentDiv = document.getElementById("content");
+  contentDiv.innerHTML = "";
+
+  document.getElementById("title").innerText = subject + " - " + type.toUpperCase();
+
+  if(type === "video") {
+    data.video.forEach(v => {
+      let thumb = `https://img.youtube.com/vi/${v.id}/0.jpg`;
+      let link = `https://www.youtube.com/watch?v=${v.id}`;
+
+      contentDiv.innerHTML += `
+        <p>${v.title}</p>
+        <img src="${thumb}" onclick="window.open('${link}', '_blank')">
+        <br>
+        <button onclick="window.open('${link}', '_blank')">
+          ▶ Watch Video
+        </button>
+        <br><br>
+      `;
+    });
+  } else {
+    data.pdf.forEach(p => {
+      contentDiv.innerHTML += `
+        <p>${p.title}</p>
+        <button onclick="window.open('${p.link}', '_blank')">
+          📖 Open PDF
+        </button>
+        <br>
+        <a href="${p.link}" target="_blank">⬇ Download PDF</a>
+        <br><br>
+      `;
+    });
+  }
+}
+</script>
+
+</body>
+</html>
