@@ -45,9 +45,9 @@ let subject;
 
 const lessons = {
   English: [
+    "Grammar Basics",
     "Nouns",
-    "Verbs",
-    "Adjectives"
+    "Verbs"
   ],
   Science: [
     "Food Sources",
@@ -84,16 +84,14 @@ function showLessons(sub) {
 
   lessons[sub].forEach(lesson => {
 
-    let videoQuery = subject + " " + lesson + " class 6 explanation";
-    let videoURL = "https://www.youtube.com/results?search_query=" + encodeURIComponent(videoQuery);
-
+    let videoURL = "https://diksha.gov.in/explore-course?query=" + encodeURIComponent(subject + " " + lesson);
     let pdfURL = "https://ncert.nic.in/textbook/textbook.htm";
 
     list.innerHTML += `
       <p>${lesson}</p>
 
       <button onclick="window.open('${videoURL}','_blank')">
-        ▶ Watch Video
+        ▶ Watch Lesson Video
       </button>
 
       <button onclick="window.open('${pdfURL}','_blank')">
